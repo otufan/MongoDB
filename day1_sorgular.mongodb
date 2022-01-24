@@ -132,15 +132,79 @@ db.fiyatlar.find(  {} ,{ fiyat:1, urunAdi:1,    _id:0}    );
 //// SYNTAX :   {field: {$gte: value} }
 ////=================================================================
 
+////-----------------------------------------------------------------
+//// 14) fiyatı 3500'e esit veya daha fazla olan URUNLERi sadece 
+////      urunAdi ve fiyatini listeleyiniz
+////-----------------------------------------------------------------
+use("URUNLER")
+
+db.fiyatlar.find(  {fiyat: {$gte:3500}} ,{ fiyat:1, urunAdi:1,    _id:0}    );
+
+
+//-----------------------------------------------------------------
+// 15) fiyatı 4000'e esit veya daha kucuk olan URUNLERin SADECE 
+//  urunAdini listeleyiniz
+//-----------------------------------------------------------------
+use("URUNLER");
+db.fiyatlar.find({"fiyat": {$lte: 4000}} , {"urunAdi":1, "_id":0});
+
+
+//-----------------------------------------------------------------
+// 16) fiyatı 1500 veya 3500 veya 7000 olan URUNLERi listeleyiniz
+//-----------------------------------------------------------------
+
+use("URUNLER");
+db.fiyatlar.find({"fiyat": {$in:[1500,3500,7000] }} , { "_id":0});
+
+//17) Sorunun olumsuzu
+use("URUNLER");
+db.fiyatlar.find({"fiyat": {$nin:[1500,3500,7000] }} , { "_id":0});
+
+
+/-----------------------------------------------------------------
+// 18) fiyatı 5000'den kucuk olup urunAdi Utu olmayan URUNLERin
+// SADECE urunAdi ve fiyat bilgilerini listeleyiniz
+//-----------------------------------------------------------------
+use("URUNLER");
+db.fiyatlar.find({ fiyat: {$lt : 5000 },  urunAdi: {$ne:"Utu"}                   }, {urunAdi:1, fiyat:1, _id:0});
+
+
+//-----------------------------------------------------------------
+// 19) fiyatı 4000'den kucuk olan VEYA urunAdi Koltuk olan URUNLERin
+// SADECE urunAdi ve fiyat bilgilerini listeleyiniz
+//-----------------------------------------------------------------
+use("URUNLER");
+db.fiyatlar.find({$or:[{fiyat: {$lt:4000}}, {urunAdi:"Koltuk"}]}, {urunAdi:1, fiyat:1, _id:0});
+
+////-----------------------------------------------------------------
+//// 20) URUNLERin tamamini SADECE urunAdini gosterecek sekilde  
+////     fiyatlarina gore artan sirada listeleyiniz.
+////-----------------------------------------------------------------
+// 1 : artan , -1: azalan ...projection 2. sırada yazılacağı için, query (filtre) istemiyorsak bile boş süslü
+use("URUNLER");
+db.fiyatlar.find({}, {urunAdi:1, _id:0}).sort({fiyat:1});
 
 
 
+////tek başına project sort olunca böyle kullanılır, aggregate içinde $sort, $project... 
 
 
+////-----------------------------------------------------------------
+//// 21) URUNLERin tamamini SADECE urunAdini gosterecek sekilde  
+////     fiyatlarina gore azalan sirada listeleyiniz.
+////-----------------------------------------------------------------
+// 1 : artan , -1: azalan 
+use("URUNLER");
+db.fiyatlar.find({}, {urunAdi:1, _id:0}).sort({fiyat:-1});
+  
+
+////-----------------------------------------------------------------
+//// 22) fiyati 5000 olan URUNLERi, urunAdi'na gore siralayarak (A-Z)
+//// listeleyiniz.
+use("URUNLER");
+db.fiyatlar.find({fiyat:5000}, {urunAdi:1, _id:0}).sort({urunAdi:1});
 
 
-
-
-
-
-
+//extra eleman ekle, fiyatı 5000 olan.
+////-----------------------------------------------------------------
+// 1 : A-Z, -1: Z-A ( ASCII formatina gore siralama yapar)
