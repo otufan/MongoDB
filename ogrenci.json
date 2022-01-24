@@ -1,0 +1,43 @@
+[{
+  "_id": {
+    "$oid": "61ec6325f4721cc1752524b2"
+  },
+  "adi": "celil",
+  "soyadi": "ozkaynak",
+  "yas": 34
+},{
+  "_id": {
+    "$oid": "61ec637cf4721cc1752524b3"
+  },
+  "adi": "mustafa",
+  "soyadi": "senel",
+  "maas": 7700
+},{
+  "_id": {
+    "$oid": "61ec63a2f4721cc1752524b4"
+  },
+  "adi": "murat",
+  "soyadi": "can",
+  "maas": 7500
+},{
+  "_id": {
+    "$oid": "61ec63b9f4721cc1752524b5"
+  },
+  "adi": "selin",
+  "soyadi": "das",
+  "yas": 43
+},{
+  "_id": {
+    "$oid": "61ec63d1f4721cc1752524b6"
+  },
+  "adi": "aysel",
+  "soyadi": "kil",
+  "yas": 65
+},{
+  "_id": {
+    "$oid": "61ec63e9f4721cc1752524b7"
+  },
+  "adi": "mehmet",
+  "soyadi": "agir",
+  "batch": 45
+}]
