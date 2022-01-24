@@ -1,1 +1,146 @@
+//=================================================================
+//SORGULAR (QUERIES) https://docs.mongodb.com/manual/reference/operator/query-comparison/      
+//adresine bakabilirler
+//=================================================================
+
+
+//-----------------------------------------------------------------
+// 1) "URUNLER" adinda bir veritabani ve icerisinde "fiyatlar" 
+// adinda bir collection tanimlayalim.  
+//-----------------------------------------------------------------
+use("URUNLER");
+
+//-----------------------------------------------------------------
+// 2) asagidaki dokumanlari collection'a kaydedelim ve listeleyelim.  
+//-----------------------------------------------------------------
+use("URUNLER");
+db.fiyatlar.insertMany([
+{"urunAdi":"TV", "fiyat": 5000, "vergi": 10 ,"summary":[{"version":1},{"show":"yok"}]},
+{"urunAdi":"Telefon", "fiyat": 3500, "vergi": 20 ,"hediye":"kapak"},
+{"urunAdi":"Utu", "fiyat": 1500, "vergi": 5 },
+{"urunAdi":"Koltuk", "fiyat": 5000, "vergi": 10},
+{"urunAdi":"Buzdolabi", "fiyat": 4000, "vergi": 10 } ] ); 
+
+use("URUNLER")
+ db.fiyatlar.find();
+
+////-----------------------------------------------------------------
+//// 3) ilk üc dokumani sorgulayalim --- limit() metodu
+////-----------------------------------------------------------------
+use("URUNLER")
+db.fiyatlar.find().limit(3);
+
+////-----------------------------------------------------------------
+//// 4) Sadece 2. ve 3. dokumanlari sorgulayalim   
+////-----------------------------------------------------------------
+use("URUNLER")
+db.fiyatlar.find().skip(1).limit(2);
+
+////-----------------------------------------------------------------
+//// 5) Birinci dokumani sorgulayalim   
+////-----------------------------------------------------------------
+use("URUNLER")
+db.fiyatlar.findOne();
+db.fiyatlar.find().limit(1);
+
+//=================================================================
+//       LOGICAL QUERY OPERATOR (mantıksal sorgu) ($and ,$or, $not,$nor)
+//
+// SYNTAX: { $and: [ {ifade1}, {ifade2} , ... , {ifadeN} ] } nor ve or, and gibi bencil
+//         { field: { $not: { <operator-ifade> } } }  ==> ( {"vergi": {$not: {$eq:10}}});
+//=================================================================
+
+
+
+
+//-----------------------------------------------------------------
+// 5) fiyat=5000 olan ve urunAdi="TV" olan dokumanlari listeleyiniz. 
+//-----------------------------------------------------------------
+use("URUNLER")
+db.fiyatlar.find({$and:[{"fiyat":5000},{"urunAdi":"TV"}]});
+
+////-----------------------------------------------------------------
+//// 6) urunAdi="Utu" olan veya vergi=10 olan dokumanlari listeleyiniz      
+////-----------------------------------------------------------------use("URUNLER")
+use("URUNLER")
+db.fiyatlar.find({$or:[{"urunAdi":"Utu"},{"vergi":10}]});
+
+
+////-----------------------------------------------------------------
+//// 7) fiyat=5000 olan URUNLERi listeleyiniz.     
+////-----------------------------------------------------------------
+use("URUNLER");
+db.fiyatlar.find({ "fiyat": 5000 });
+
+
+use("URUNLER");
+db.fiyatlar.find({fiyat: {$eq:5000}, $comment:"benim bir yorumum var" })
+// bu sorunun böyle de cozumu Varolan
+
+
+//esit olmayanlara bakalim &ne
+use("URUNLER");
+db.fiyatlar.find({fiyat: {$ne:5000}   });
+
+use("URUNLER");
+db.fiyatlar.find({fiyat: {$not: {$eq:5000}  }})
+
+
+
+
+////-----------------------------------------------------------------
+//// 9) (urunAdi= TV  vergi=10) olmayan dokumanlari listeleyiniz , nor=hiçbiri
+////-----------------------------------------------------------------
+use("URUNLER");
+db.fiyatlar.find({$nor:[  {urunAdi:"TV"},{vergi:10}   ]  });
+
+
+
+//-----------------------------------------------------------------
+// Projection'da gosterilmek istenen Field'a 1 degeri atanir Ornegin: 
+// {"fiyat":1}, gosterilmek istenmeyenler ise yazilmaz. 
+// Sadece _id icin bir istisna vardir.  onu istemiyorsak 0 ile belirticez
+//
+// SYNTAX   db.collection.find( {query}, {projection}). aynı kişinin fiyatını id sini istediği için aynı parantez, süslünün biri filtreleme şartları  için, biri göstermek istediğimiz field lar için
+//-----------------------------------------------------------------
+
+
+// 10) urunAdi=TV olan kayitlarin sadece fiyat'ini listeleyiniz.
+//     (Bu isleme Projection denilmektedir)
+
+use("URUNLER");
+db.fiyatlar.find( { urunAdi:"TV" },{ fiyat:1, _id:0 } );
+
+//-----------------------------------------------------------------
+// 11) Tum dokumanlarin sadece fiyat ve urunAdini listeleyiniz.
+//-----------------------------------------------------------------
+
+use("URUNLER")
+
+db.fiyatlar.find(  {} ,{ fiyat:1, urunAdi:1,    _id:0}    );
+
+////=================================================================
+////                    COMPARAISON (karşılaştırma) OPERATOR 
+//// $eq : esit mi
+//// $lt : kücük mü  (less than)
+//// $gt : buyuk mu (greater than)
+//// $lte: kucuk esit mi
+//// $gte: buyuk esit mi
+//// $ne : esit degil mi
+//// $in : belirtilen degerler, bir dizideki degerlerden birisine esit mi
+//// $nin: belirtilen degerler, bir dizideki tum degerlere esit degil mi
+//// SYNTAX :   {field: {$gte: value} }
+////=================================================================
+
+
+
+
+
+
+
+
+
+
+
+
 
