@@ -1,0 +1,21 @@
+//1) 90'ın üzerinde puan alan restoranları bulmak için bir MongoDB sorgusu yazın 
+use("ÜLKELER");
+db.foods.find({"grades.score": {$gt:90       } }, {name:1,grades:1,_id:0});
+
+use("ÜLKELER");
+db.foods.find({grades : { $elemMatch:{"score":{$gt : 90}}}}, {borough:1,cuisine:1,grades:1,_id:0}  );
+
+//2) 80'den fazla 150'den az puan alan restoranları bulmak için bir MongoDB sorgusu yazın
+use("ÜLKELER");
+db.foods.find({"grades.score":{$gt:80,$lt:150 }},{"name":1,"grades":1, "_id":0});
+
+
+
+//3) Herhangi bir 'Amerikan' mutfağı hazırlamayan ve 70'den büyük score a 
+//ve -65.754168'den küçük enlem değerine sahip restoranları bulmak için bir MongoDB sorgusu yazın
+use("ÜLKELER");
+db.foods.find({"cuisine": {$ne:"American "}, "grades.score":{$gt:70},"address.coord":{$lt:-65.754168} },
+{cuisine:1,"address.coord":1,grades:1,_id:0});
+
+
+
