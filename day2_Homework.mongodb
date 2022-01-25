@@ -18,4 +18,17 @@ db.foods.find({"cuisine": {$ne:"American "}, "grades.score":{$gt:70},"address.co
 {cuisine:1,"address.coord":1,grades:1,_id:0});
 
 
+//4) Adının ilk üç harfi 'Wil' olan restoranlar için 
+//restoran kimliği, adı, ilçesi ve mutfağını bulmak için bir MongoDB sorgusu yazın.
+use("ÜLKELER");
+db.foods.find({ name: /^Wil/  },{restaurant_id:1, borough:1, name:1, cuisine:1, _id:0  });
 
+//5) Adının bir yerinde üç harf olarak 'Reg' içeren restoranlar için restoran kimliği, adı, ilçesi ve mutfağını bulmak için bir MongoDB sorgusu yazın.
+use("ÜLKELER");
+db.foods.find({"name":/.*Reg.*/},{"restaurant_id":1,"name":1, "borough":1,"cuisine":1, "_id":0});
+
+//6) Staten Island veya Queens veya Bronx veya Brooklyn borough a ait restoranlar için restoran id sini, 
+//adını, borough(ilçe) ve mutfağını bulmak için bir MongoDB sorgusu yazın
+use("ÜLKELER");
+db.foods.find({ borough: {$in: ["Staten Island", "Queens", "Bronx", "Brooklyn" ]}},
+{name:1, borough:1, name:1, cuisine:1, _id:0  } )
